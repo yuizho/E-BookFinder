@@ -5,9 +5,9 @@ import {
 } from 'react-native'
 
 class ResultList extends Component {
-  static navigationOptions = {
-    title: '検索結果',
-  }
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.state.params.code}が読み込まれました`,
+  })
   render() {
     return (
       <View>
