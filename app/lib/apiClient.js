@@ -11,26 +11,24 @@ export default class ApiClient {
   }
   
   static get(uri) {
-    return this.request(uri, null, 'GET')
+    return this.send(uri, null, 'GET')
   }
   
   static post(uri, params) {
-    return this.request(uri, params, 'POST')
+    return this.send(uri, params, 'POST')
   }
   
-  static request(uri, params, method) {
+  static send(uri, params, method) {
     const request = {}
     request.method = method
     request.body = params ? { body: JSON.stringfy(params) } : null
     request.headers = {
       'Content-Type': 'application/json',
     }
-    return fetch(uri, request).then(resp => {
-      let json = resp.json()
-      if (resp.ok) {
-        return json
-      }
-      return json.then(e => {throw e})
-    })
+    return fetch(uri, request)
+      .then((resp) => resp.json())
+      .catch((ex) => {
+        cnosole.error(ex)
+      })
   }
 }
