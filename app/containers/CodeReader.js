@@ -13,7 +13,9 @@ import { Observable } from 'rx';
 const emitter = new EventEmitter();
 Observable
   .fromEvent(emitter, 'onBarCodeRead')
-  .debounce(150)
+// TODO: いい感じにイベントをまとめたいが……
+  .debounce(300)
+//  .distinct()
   .subscribe(value => {
                  console.log(`observed: ${value.event.data}`)
                  value.navigation.navigate('ResultList', {code: value.event.data})
@@ -46,6 +48,12 @@ class CodeReader extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Button
+           title='push'
+           onPress={() => {
+             emitter.emit('onBarCodeRead', {event: {data: '9784091894458'}, navigation: this.props.navigation})
+          }}
+          />
         <Camera
           ref={(cam) => {
             this.camera = cam;

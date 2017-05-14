@@ -1,4 +1,15 @@
 export default class ApiClient {
+  static createGetUri(uri='', params={}) {
+    if (!Object.values(params).length) {
+      return uri
+    }
+    let query_args = []
+    for (var [key, value] of Object.entries(params)){
+      query_args.push(`${key}=${encodeURI(value)}`)
+    }
+    return `${uri}?` + query_args.join('&')
+  }
+  
   static get(uri) {
     return this.request(uri, null, 'GET')
   }
@@ -7,7 +18,7 @@ export default class ApiClient {
     return this.request(uri, params, 'POST')
   }
   
-  static send(uri, params, method) {
+  static request(uri, params, method) {
     const request = {}
     request.method = method
     request.body = params ? { body: JSON.stringfy(params) } : null
@@ -20,6 +31,6 @@ export default class ApiClient {
         return json
       }
       return json.then(e => {throw e})
-    }).then(json => json.results)
+    })
   }
 }
