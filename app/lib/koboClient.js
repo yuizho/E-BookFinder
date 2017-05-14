@@ -9,6 +9,12 @@ export default class KoboClient {
         return this.fetchKobo(resp.Items[0].Item.title, resp.Items[0].Item.author)
       })
       .then((resp) => {
+        if (resp.hasOwnProperty('error')) {
+          console.log('rakuten api returned error')
+          console.log(`error: ${resp.error}`)
+          console.log(`error_description: ${resp.error_description}`)
+          return []
+        }
         const items = []
         resp.Items.map((item) => {
           items.push({
@@ -38,9 +44,13 @@ export default class KoboClient {
   }
 
   static fetchKobo(keyword='', author='') {
+    const args = keyword.split(/[　\(\)\[\]【】 ,@\\「」（）『』［］〈〉《》〔〕｛｝{}‘’“”{}"'`]/g)
+    const filtered = args.filter((keyword) => { return keyword.length > 1 }).join(' ')
+    console.log(filtered)
+    console.log(author)
     const params = {
       format: 'json',
-      keyword: keyword,
+      keyword: filtered,
       author: author,
       // temporary application id
       applicationId: '1065701398855394313'
