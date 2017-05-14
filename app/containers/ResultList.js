@@ -4,7 +4,9 @@ import {
   Text,
   ScrollView,
   Image,
+  StyleSheet,
 } from 'react-native'
+import * as Progress from 'react-native-progress';
 import KoboClient from '../lib/koboClient'
 
 class ResultList extends Component {
@@ -33,8 +35,8 @@ class ResultList extends Component {
   
   render() {
     return (
-      <View>
-        {this.state.searching ? <Text>Searching...</Text>: null}
+      <View style={styles.container}>
+        {this.state.searching ? <View style={styles.overlay}><Progress.Circle size={60} indeterminate={true} /></View>: null}
         <ScrollView>
           {!this.state.searching && this.state.items.map((item) => {
             // TODO: リストItemでコンポーネント化する
@@ -55,5 +57,22 @@ class ResultList extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  overlay: {
+    position: 'absolute',
+    justifyContent: 'center', 
+    alignItems: 'center',
+    alignSelf:'center',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom:0,
+    backgroundColor: 'transparent',
+  },
+})
 
 export default ResultList
