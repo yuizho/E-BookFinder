@@ -7,25 +7,10 @@ import {
 } from 'react-native'
 import Camera from 'react-native-camera';
 import { NavigationActions } from 'react-navigation'
-import { EventEmitter } from 'events';
-import { Observable } from 'rx';
-
-const emitter = new EventEmitter();
-Observable
-  .fromEvent(emitter, 'onBarCodeRead')
-// TODO: いい感じにイベントをまとめたいが……
-  .debounce(300)
-//  .distinct()
-  .subscribe(value => {
-                 console.log(`observed: ${value.event.data}`)
-                 value.navigation.navigate('ResultList', {code: value.event.data})
-             },
-             error => console.log(`error: ${error.event.data}`),
-             () => console.log('onCompleted')
-            );
 
 class CodeReader extends Component {
   static navigationOptions = {
+    key: 'code-reader-nav-bar',
     headerColor: 'blue',
     title: 'バーコード読み取り',
   }
@@ -40,19 +25,36 @@ class CodeReader extends Component {
         type: Camera.constants.Type.back,
         orientation: Camera.constants.Orientation.auto,
         flashMode: Camera.constants.FlashMode.auto,
+        readed: false,
       },
       isRecording: false,
     }
   }
 
+  componentWillUnmount() {
+    this.setState({readed: true})
+  }
+
+  componentWillMount() {
+    this.setState({readed: false})
+  }
+
+  _onBarCodeRead = (event) => {
+    if (!this.state.readed) {
+      this.componentWillUnmount()
+      this.props.navigation.navigate('ResultList', {code: event.data})
+      setTimeout(() => {
+        this.componentWillMount();
+      }, 3000);
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <Button
-           title='push'
-           onPress={() => {
-             emitter.emit('onBarCodeRead', {event: {data: '9784091894458'}, navigation: this.props.navigation})
-          }}
+          title='push'
+          onPress={() => {this.props.navigation.navigate('ResultList', {code: '9784062935579'})}}
           />
         <Camera
           ref={(cam) => {
@@ -65,10 +67,7 @@ class CodeReader extends Component {
           flashMode={this.state.camera.flashMode}
           onFocusChanged={() => {}}
           onZoomChanged={() => {}}
-          onBarCodeRead={(event) => {
-            console.log(`readed: ${event.data}`)
-            emitter.emit('onBarCodeRead', {event: event, navigation: this.props.navigation})
-          }}
+          onBarCodeRead={this._onBarCodeRead}
           defaultTouchToFocus
           mirrorImage={false}
           />
