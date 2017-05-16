@@ -5,6 +5,8 @@ import {
   ScrollView,
   Image,
   StyleSheet,
+  Linking,
+  TouchableOpacity,
 } from 'react-native'
 import * as Progress from 'react-native-progress';
 import KoboClient from '../lib/koboClient'
@@ -32,6 +34,11 @@ class ResultList extends Component {
         console.error(ex)
       })
   }
+
+  openURL(url) {
+    Linking.openURL(url)
+      .catch(err => console.error('an error occurred on browser', err));
+  }
   
   render() {
     return (
@@ -41,15 +48,14 @@ class ResultList extends Component {
           {!this.state.searching && this.state.items.map((item) => {
             // TODO: リストItemでコンポーネント化する
             return (
-              <View key={`${item.key}-view`}>
+              <TouchableOpacity key={`${item.key}-view`} onPress={() => {this.openURL(item.url)}}>
                 <Image
                    key={`${item.key}-image`}
                    style={{width: 50, height: 50}}
                    source={{uri: item.image}}
                    />
                 <Text key={`${item.key}-title`}>{item.title}</Text>
-              </View>
-
+              </TouchableOpacity>
             )
           })}
         </ScrollView>

@@ -27,8 +27,6 @@ export default class ApiClient {
     }
     return fetch(uri, request)
       .then((resp) => resp.json())
-      .catch((ex) => {
-        cnosole.error(ex)
-      })
+      .catch((ex) => {console.error(ex)})
   }
 }

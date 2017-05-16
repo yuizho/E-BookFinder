@@ -5,12 +5,17 @@ export default class KoboClient {
   static retrieveKoboInfo(isbn='') {
     return this.fetchRakutenBooks(isbn)
       .then((resp) => {
-        // TODO: titileの( とかをspace変換したほうがいいか？？
+        if (resp.hasOwnProperty('error')) {
+          console.log('rakuten books api returned error')
+          console.log(`error: ${resp.error}`)
+          console.log(`error_description: ${resp.error_description}`)
+          return []
+        }
         return this.fetchKobo(resp.Items[0].Item.title, resp.Items[0].Item.author)
       })
       .then((resp) => {
         if (resp.hasOwnProperty('error')) {
-          console.log('rakuten api returned error')
+          console.log('kobo api returned error')
           console.log(`error: ${resp.error}`)
           console.log(`error_description: ${resp.error_description}`)
           return []
@@ -45,6 +50,7 @@ export default class KoboClient {
 
   static fetchKobo(keyword='', author='') {
     const args = keyword.split(/[　\(\)\[\]【】 ,@\\「」（）『』［］〈〉《》〔〕｛｝{}‘’“”{}"'`]/g)
+    // TODO: 1とかは01に直すようにしたいなぁ
     const filtered = args.filter((keyword) => { return keyword.length > 1 }).join(' ')
     console.log(filtered)
     console.log(author)
