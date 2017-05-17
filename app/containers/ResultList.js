@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import {
   View,
-  Text,
   ScrollView,
-  Image,
   StyleSheet,
   Linking,
-  TouchableOpacity,
 } from 'react-native'
 import * as Progress from 'react-native-progress';
 import KoboClient from '../lib/koboClient'
+import Book from '../components/Book'
 
 class ResultList extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -46,16 +44,12 @@ class ResultList extends Component {
         {this.state.searching ? <View style={styles.overlay}><Progress.Circle size={60} indeterminate={true} /></View>: null}
         <ScrollView>
           {!this.state.searching && this.state.items.map((item) => {
-            // TODO: リストItemでコンポーネント化する
             return (
-              <TouchableOpacity key={`${item.key}-view`} onPress={() => {this.openURL(item.url)}}>
-                <Image
-                   key={`${item.key}-image`}
-                   style={{width: 50, height: 50}}
-                   source={{uri: item.image}}
-                   />
-                <Text key={`${item.key}-title`}>{item.title}</Text>
-              </TouchableOpacity>
+              <Book
+                 key={item.key}
+                 item={item}
+                 openURL={this.openURL}
+                 />
             )
           })}
         </ScrollView>
