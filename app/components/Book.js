@@ -23,8 +23,9 @@ class Book extends Component {
            style={styles.bookImage}
            source={{uri: item.image}}
            />
-        <View >
+        <View style={styles.bookTextBox}>
           <Text>{item.title}</Text>
+          <Text>{`${item.price}円`}</Text>
           <Text>{item.type}</Text>
         </View>
       </TouchableOpacity> 
@@ -34,12 +35,19 @@ class Book extends Component {
 
 const styles = StyleSheet.create({
   bookItem: {
+    marginTop: -1,
     flex: 1,
     flexDirection: 'row',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    padding: 10,
+  },
+  bookTextBox: {
+    marginLeft: 5,
   },
   bookImage: {
-    width: 64,
-    height: 64,
+    width: 80,
+    height: 80,
   }
 })
 
