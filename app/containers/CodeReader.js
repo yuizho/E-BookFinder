@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  Button,
   StyleSheet,
 } from 'react-native'
 import Camera from 'react-native-camera';
@@ -11,7 +10,6 @@ import { NavigationActions } from 'react-navigation'
 class CodeReader extends Component {
   static navigationOptions = {
     key: 'code-reader-nav-bar',
-    headerColor: 'blue',
     title: 'バーコード読み取り',
   }
 
@@ -52,10 +50,6 @@ class CodeReader extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          title='push'
-          onPress={() => {this.props.navigation.navigate('ResultList', {code: '9784062935579'})}}
-          />
         <Camera
           ref={(cam) => {
             this.camera = cam;
@@ -71,7 +65,9 @@ class CodeReader extends Component {
           defaultTouchToFocus
           mirrorImage={false}
           />
-          <View style={styles.overlay}/>
+          <View style={styles.overlayTop}/>
+          <View style={styles.overlayLine}></View>
+          <View style={styles.overlayBottom}/>
       </View>
     )
   }
@@ -86,20 +82,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  overlay: {
+  overlayTop: {
     position: 'absolute',
     justifyContent: 'center', 
     alignItems: 'center',
-    alignSelf:'center',
-    // TODO: 固定長なのでちゃんと書きたい
-    top: 150,
+    top: 0,
     right: 0,
     left: 0,
-    height: 200,
-    backgroundColor: 'transparent',
+    height: '30%',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+  },
+  overlayLine: {
+    position: 'absolute',
+    justifyContent: 'center', 
+    alignItems: 'center',
+    top: '50%',
+    right: 0,
+    left: 0,
     borderColor: 'red',
-    borderWidth: 4,
-  }
+    borderWidth: 1,
+  },
+  overlayBottom: {
+    position: 'absolute',
+    justifyContent: 'center', 
+    alignItems: 'center',
+    bottom: 0,
+    right: 0,
+    left: 0,
+    height: '30%',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+  },
 })
 
 export default CodeReader
