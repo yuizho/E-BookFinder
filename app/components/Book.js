@@ -20,6 +20,7 @@ class Book extends Component {
          onPress={() => {this.props.openURL(item.url)}}
          >
         <Image
+           resizeMode={Image.resizeMode.contain}
            style={styles.bookImage}
            source={{uri: item.image}}
            />
