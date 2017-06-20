@@ -6,8 +6,9 @@ import {
   Linking,
 } from 'react-native'
 import * as Progress from 'react-native-progress';
-import KoboClient from '../lib/koboClient'
+import ApiClient from '../lib/apiClient'
 import Book from '../components/Book'
+import Config from 'react-native-config'
 
 class ResultList extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -24,9 +25,9 @@ class ResultList extends Component {
   componentDidMount() {
     this.setState({searching: true})
     // fetch e-book data form API.
-    Promise.all([KoboClient.retrieveKoboInfo(this.props.navigation.state.params.code)])
+    Promise.all([ApiClient.get(Config.API_URL + this.props.navigation.state.params.code)])
       .then((items) => {
-        this.setState({searching: false, items: items[0]})
+        this.setState({searching: false, items: items[0].ebooks})
       })
       .catch((ex) => {
         console.error(ex)

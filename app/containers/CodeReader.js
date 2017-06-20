@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
+  Button,
   StyleSheet,
 } from 'react-native'
 import Camera from 'react-native-camera';
@@ -68,6 +69,7 @@ class CodeReader extends Component {
           <View style={styles.overlayTop}/>
           <View style={styles.overlayLine}></View>
           <View style={styles.overlayBottom}/>
+          {__DEV__ ? <Button title='button-9784062935579' onPress={() => {this.props.navigation.navigate('ResultList', {code: '9784062935579'})}}/>: null}
       </View>
     )
   }
