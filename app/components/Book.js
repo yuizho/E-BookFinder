@@ -26,7 +26,6 @@ class Book extends Component {
            />
         <View style={styles.bookTextBox}>
           <Text>{item.title}</Text>
-          <Text>{`${item.price}円`}</Text>
           <Text>{item.type}</Text>
         </View>
       </TouchableOpacity> 
