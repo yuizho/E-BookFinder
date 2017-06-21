@@ -4,11 +4,18 @@ import {
   ScrollView,
   StyleSheet,
   Linking,
+  Alert
 } from 'react-native'
 import * as Progress from 'react-native-progress';
 import ApiClient from '../lib/apiClient'
 import Book from '../components/Book'
 import Config from 'react-native-config'
+
+function goBackDialog(title, content, navigation) {
+  Alert.alert(title, content,
+              [{text: '戻る', onPress:() => navigation.goBack()}],
+              {cancelable: false})
+}
 
 class ResultList extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -26,17 +33,33 @@ class ResultList extends Component {
     this.setState({searching: true})
     // fetch e-book data form API.
     Promise.all([ApiClient.get(Config.API_URL + this.props.navigation.state.params.code)])
-      .then((items) => {
-        this.setState({searching: false, items: items[0].ebooks})
+      .then((result) => {
+        const ebooks = result[0].ebooks
+        if (!ebooks.length) {
+          goBackDialog('E-Book検索結果',
+                       '読み取った本の電子書籍はみつかりませんでした。',
+                       this.props.navigation)
+        } else {
+          this.setState({searching: false, items: ebooks})
+        }
       })
       .catch((ex) => {
-        console.error(ex)
+        console.log(ex)
+        if (ex.status === 500 || ex.status === 503) {
+          goBackDialog('サーバエラー',
+                       '現在サーバが混み合っています。少し時間をおいてから、再度バーコードを読み取ってください。',
+                       this.props.navigation)
+        } else {
+          goBackDialog('通信エラー',
+                       '通信エラーが発生しました。通信状態を確認して、再度バーコードを読み取ってください。',
+                       this.props.navigation)
+        }
       })
   }
 
   openURL(url) {
     Linking.openURL(url)
-      .catch(err => console.error('an error occurred on browser', err));
+      .catch(err => console.log('an error occurred on browser', err));
   }
   
   render() {

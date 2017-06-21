@@ -70,6 +70,8 @@ class CodeReader extends Component {
           <View style={styles.overlayLine}></View>
           <View style={styles.overlayBottom}/>
           {__DEV__ ? <Button title='button-9784062935579' onPress={() => {this.props.navigation.navigate('ResultList', {code: '9784062935579'})}}/>: null}
+          {__DEV__ ? <Button title='button-9784594045470' onPress={() => {this.props.navigation.navigate('ResultList', {code: '9784594045470'})}}/>: null}
+          {__DEV__ ? <Button title='button-notisbn' onPress={() => {this.props.navigation.navigate('ResultList', {code: '9784594045'})}}/>: null}
       </View>
     )
   }

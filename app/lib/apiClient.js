@@ -26,7 +26,15 @@ export default class ApiClient {
       'Content-Type': 'application/json',
     }
     return fetch(uri, request)
+      .then((resp) => {
+        if (resp.status !== 200 && resp.status !== 300) {
+          // TODO: headerにRetry-Afterがある場合は再トライ
+          let error = new Error(`http status ${resp.status} was returned.`)
+          error.status = resp.status
+          return Promise.reject(error)
+        }
+        return resp
+      })
       .then((resp) => resp.json())
-      .catch((ex) => {console.error(ex)})
   }
 }
