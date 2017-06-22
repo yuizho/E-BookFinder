@@ -1,3 +1,7 @@
+import {
+  AsyncStorage,
+} from 'react-native'
+
 export default class ApiClient {
   static createGetUri(uri='', params={}) {
     if (!Object.values(params).length) {
@@ -19,22 +23,25 @@ export default class ApiClient {
   }
   
   static send(uri, params, method) {
-    const request = {}
-    request.method = method
-    request.body = params ? { body: JSON.stringfy(params) } : null
-    request.headers = {
-      'Content-Type': 'application/json',
-    }
-    return fetch(uri, request)
-      .then((resp) => {
-        if (resp.status !== 200 && resp.status !== 300) {
-          // TODO: headerにRetry-Afterがある場合は再トライ
-          let error = new Error(`http status ${resp.status} was returned.`)
-          error.status = resp.status
-          return Promise.reject(error)
-        }
-        return resp
-      })
-      .then((resp) => resp.json())
+    return AsyncStorage.getItem('uuid').then((uuid) => {
+      const request = {}
+      request.method = method
+      request.body = params ? { body: JSON.stringfy(params) } : null
+      request.headers = {
+        'X-Request-Id': uuid,
+        'Content-Type': 'application/json',
+      }
+      return fetch(uri, request)
+        .then((resp) => {
+          if (resp.status !== 200 && resp.status !== 300) {
+            // TODO: headerにRetry-Afterがある場合は再トライ
+            let error = new Error(`http status ${resp.status} was returned.`)
+            error.status = resp.status
+            return Promise.reject(error)
+          }
+          return resp
+        })
+        .then((resp) => resp.json())
+    })
   }
 }

@@ -7,12 +7,22 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  
   AppRegistry,
+  AsyncStorage,
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import CodeReader from './app/containers/CodeReader'
 import ResultList from './app/containers/ResultList'
+import genUUID from 'uuid/v4'
+
+(() => {
+  AsyncStorage.getItem('uuid').then((uuid) => {
+    console.log(uuid)
+    if (uuid === null){
+      AsyncStorage.setItem('uuid', genUUID())
+    }
+  })
+})()
 
 export default class EBookFinder extends Component {
   render() {
