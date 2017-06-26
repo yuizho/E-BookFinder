@@ -55,7 +55,7 @@ class ResultList extends Component {
           const ebooks = result[0].ebooks
           if (!ebooks.length) {
             goBackDialog('E-Book検索結果',
-                         '読み取った本の電子書籍はみつかりませんでした。',
+                         'バーコードを読み取った本の電子書籍はみつかりませんでした。',
                          this.props.navigation)
           } else {
             this.setState({searching: false, items: ebooks})
