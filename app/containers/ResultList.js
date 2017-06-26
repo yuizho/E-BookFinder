@@ -14,6 +14,7 @@ import ApiClient from '../lib/apiClient'
 import Book from '../components/Book'
 import Config from 'react-native-config'
 import ISBN from 'isbnjs'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 function goBackDialog(title, content, navigation) {
   Alert.alert(title, content,
@@ -24,11 +25,18 @@ function goBackDialog(title, content, navigation) {
 class ResultList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'E-Book検索結果',
+    headerStyle: {
+      backgroundColor: '#039588',
+    },
+    headerTitleStyle: {
+      color: '#fff',
+    },
+    headerTintColor: '#fff',
     headerRight: (
       <TouchableOpacity
          style={styles.headerRight}
          onPress={() => {navigation.navigate('AboutApp')}}>
-        <Text>info</Text>
+        <Icon name="info" size={30} color="#fff" />
       </TouchableOpacity>
     ),
   })

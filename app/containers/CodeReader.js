@@ -8,15 +8,23 @@ import {
 } from 'react-native'
 import Camera from 'react-native-camera';
 import { NavigationActions } from 'react-navigation'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class CodeReader extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'ISBNバーコード読み取り',
+    headerStyle: {
+      backgroundColor: '#039588',
+    },
+    headerTitleStyle: {
+      color: '#fff',
+    },
+    headerTintColor: '#fff',
     headerRight: (
       <TouchableOpacity
          style={styles.headerRight}
          onPress={() => {navigation.navigate('AboutApp')}}>
-        <Text>info</Text>
+        <Icon name="info" size={30} color="#fff" />
       </TouchableOpacity>
     ),
   })

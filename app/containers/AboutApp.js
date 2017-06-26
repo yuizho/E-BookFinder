@@ -11,6 +11,13 @@ import appInfo from 'EBookFinder/package.json'
 class AboutApp extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'このアプリについて',
+    headerStyle: {
+      backgroundColor: '#039588',
+    },
+    headerTitleStyle: {
+      color: '#fff',
+    },
+    headerTintColor: '#fff',
   })
 
   constructor(props) {
