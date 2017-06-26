@@ -6,6 +6,7 @@ import {
   Image,
 } from 'react-native'
 import Credit from '../components/Credit'
+import appInfo from 'EBookFinder/package.json'
 
 class AboutApp extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -24,7 +25,9 @@ class AboutApp extends Component {
              style={styles.appImage}
              source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
            />
-          <Text style={styles.aboutText}>バージョン: 0.0.1</Text>
+          <Text style={styles.aboutText}>
+            バージョン: {appInfo.version}
+          </Text>
         </View>
         <Credit/>
       </View>
