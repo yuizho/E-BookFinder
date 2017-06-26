@@ -13,6 +13,7 @@ import {
 import { StackNavigator } from 'react-navigation'
 import CodeReader from './app/containers/CodeReader'
 import ResultList from './app/containers/ResultList'
+import AboutApp from './app/containers/AboutApp'
 import genUUID from 'uuid/v4'
 
 (() => {
@@ -35,6 +36,7 @@ export default class EBookFinder extends Component {
 const App = StackNavigator({
   CodeReader: { screen: CodeReader },
   ResultList: { screen: ResultList },
+  AboutApp:   { screen: AboutApp },
 })
 
 AppRegistry.registerComponent('EBookFinder', () => App)

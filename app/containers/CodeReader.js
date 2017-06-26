@@ -3,16 +3,23 @@ import {
   View,
   Text,
   Button,
+  TouchableOpacity,
   StyleSheet,
 } from 'react-native'
 import Camera from 'react-native-camera';
 import { NavigationActions } from 'react-navigation'
 
 class CodeReader extends Component {
-  static navigationOptions = {
-    key: 'code-reader-nav-bar',
-    title: 'バーコード読み取り',
-  }
+  static navigationOptions = ({ navigation }) => ({
+    title: 'ISBNバーコード読み取り',
+    headerRight: (
+      <TouchableOpacity
+         style={styles.headerRight}
+         onPress={() => {navigation.navigate('AboutApp')}}>
+        <Text>info</Text>
+      </TouchableOpacity>
+    ),
+  })
 
   constructor(props) {
     super(props);
@@ -46,7 +53,7 @@ class CodeReader extends Component {
         this.componentWillMount();
       }, 3000);
     }
-  };
+  }
 
   render() {
     return (
@@ -85,6 +92,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  headerRight: {
+    margin: 15,
   },
   overlayTop: {
     position: 'absolute',

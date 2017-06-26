@@ -4,7 +4,10 @@ import {
   ScrollView,
   StyleSheet,
   Linking,
-  Alert
+  Alert,
+  Button,
+  TouchableOpacity,
+  Text,
 } from 'react-native'
 import * as Progress from 'react-native-progress';
 import ApiClient from '../lib/apiClient'
@@ -21,10 +24,18 @@ function goBackDialog(title, content, navigation) {
 class ResultList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'E-Book検索結果',
+    headerRight: (
+      <TouchableOpacity
+         style={styles.headerRight}
+         onPress={() => {navigation.navigate('AboutApp')}}>
+        <Text>info</Text>
+      </TouchableOpacity>
+    ),
   })
 
   constructor(props) {
     super(props)
+    
     this.state = { searching: false, items: [], errMsg: '' }
   }
 
@@ -93,6 +104,9 @@ class ResultList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  headerRight: {
+    margin: 15,
   },
   overlay: {
     position: 'absolute',
