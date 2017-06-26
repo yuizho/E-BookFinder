@@ -12,6 +12,17 @@ class Book extends Component {
     super(props)
   }
 
+  getBookTypeStyles = (type) => {
+    let s = {}
+    s.fontWeight = 'bold'
+    s.flex = 0.1
+    if (type === 'kindle')
+      s.color = '#ff9900'
+    else if (type === 'kobo')
+      s.color =  '#bf0000'
+    return s
+  }
+
   render() {
     const item = this.props.item
     return(
@@ -24,9 +35,11 @@ class Book extends Component {
            style={styles.bookImage}
            source={{uri: item.image}}
            />
-        <View style={styles.bookTextBox}>
-          <Text>{item.title}</Text>
-          <Text>{item.type}</Text>
+        <View style={styles.bookTextView}>
+          <Text style={styles.bookTitle}>{item.title}</Text>
+          <Text style={this.getBookTypeStyles(item.type)}>
+            {item.type}
+          </Text>
         </View>
       </TouchableOpacity> 
     )
@@ -42,10 +55,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  bookTextBox: {
-    marginLeft: 5,
+  bookTextView: {
+    flex: 0.8,
+    paddingLeft: 10,
+  },
+  bookTitle: {
+    flex: 0.9,
   },
   bookImage: {
+    flex: 0.2,
     width: 80,
     height: 80,
   }
