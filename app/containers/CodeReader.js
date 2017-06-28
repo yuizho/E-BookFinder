@@ -9,7 +9,7 @@ import {
 import Camera from 'react-native-camera';
 import { NavigationActions } from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Answerss } from 'react-native-fabric';
+import { Answers } from 'react-native-fabric';
 
 class CodeReader extends Component {
   static navigationOptions = ({ navigation }) => ({
