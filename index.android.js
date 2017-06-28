@@ -15,13 +15,16 @@ import CodeReader from './app/containers/CodeReader'
 import ResultList from './app/containers/ResultList'
 import AboutApp from './app/containers/AboutApp'
 import genUUID from 'uuid/v4'
+import { Crashlytics } from 'react-native-fabric';
 
 (() => {
   AsyncStorage.getItem('uuid').then((uuid) => {
-    console.log(uuid)
     if (uuid === null){
       AsyncStorage.setItem('uuid', genUUID())
+      Crashlytics.setUserIdentifier(genUUID())
+      return
     }
+    Crashlytics.setUserIdentifier(uuid)
   })
 })()
 

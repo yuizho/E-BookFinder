@@ -9,6 +9,7 @@ import {
 import Camera from 'react-native-camera';
 import { NavigationActions } from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Answerss } from 'react-native-fabric';
 
 class CodeReader extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -56,6 +57,7 @@ class CodeReader extends Component {
   _onBarCodeRead = (event) => {
     if (!this.state.readed) {
       this.componentWillUnmount()
+      Answers.logSearch(event.data)
       this.props.navigation.navigate('ResultList', {code: event.data})
       setTimeout(() => {
         this.componentWillMount();

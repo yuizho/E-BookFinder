@@ -15,6 +15,7 @@ import Book from '../components/Book'
 import Config from 'react-native-config'
 import ISBN from 'isbnjs'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Answers } from 'react-native-fabric';
 
 function goBackDialog(title, content, navigation) {
   Alert.alert(title, content,
@@ -70,7 +71,7 @@ class ResultList extends Component {
           }
         })
         .catch((ex) => {
-          console.log(ex)
+          Answers.logCustom('request error', { status: ex.status, message: ex.message });
           if (ex.status === 500 || ex.status === 503) {
             goBackDialog('サーバエラー',
                          '現在サーバが混み合っています。少し時間をおいてから、再度バーコードを読み取ってください。',
@@ -85,6 +86,7 @@ class ResultList extends Component {
   }
 
   openURL(url) {
+    Answers.logCustom('open url', { url: url });
     Linking.openURL(url)
       .catch(err => console.log('an error occurred on browser', err));
   }
