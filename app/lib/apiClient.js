@@ -31,17 +31,20 @@ export default class ApiClient {
         'X-Request-Id': uuid,
         'Content-Type': 'application/json',
       }
-      return fetch(uri, request)
-        .then((resp) => {
-          if (resp.status !== 200 && resp.status !== 300) {
-            // TODO: headerにRetry-Afterがある場合は再トライ
-            let error = new Error(`http status ${resp.status} was returned.`)
-            error.status = resp.status
-            return Promise.reject(error)
-          }
-          return resp
+      return Promise.race([
+        fetch(uri, request),
+        new Promise(function (resolve, reject) {
+          setTimeout(() => reject(new Error('request timeout')), 10000)
         })
-        .then((resp) => resp.json())
+      ]).then((resp) => {
+        if (resp.status !== 200 && resp.status !== 300) {
+          // TODO: headerにRetry-Afterがある場合は再トライ
+          let error = new Error(`http status ${resp.status} was returned.`)
+          error.status = resp.status
+          return Promise.reject(error)
+        }
+        return resp
+      }).then((resp) => resp.json())
     })
   }
 }

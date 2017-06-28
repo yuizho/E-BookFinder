@@ -44,7 +44,6 @@ class ResultList extends Component {
 
   constructor(props) {
     super(props)
-    
     this.state = { searching: false, items: [], errMsg: '' }
   }
 
