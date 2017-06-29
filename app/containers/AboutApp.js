@@ -30,8 +30,9 @@ class AboutApp extends Component {
         <View style={styles.about}>
           <Image
              style={styles.appImage}
-             source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-           />
+             source={require('../img/android_icon.png')}
+             />
+          <Text style={styles.aboutText}>E-BookFinder</Text>
           <Text style={styles.aboutText}>
             バージョン: {appInfo.version}
           </Text>
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
   about: {
     margin: 20,
-    flex: 0.23,
+    flex: 0.3,
     alignItems: 'center',
   },
   appImage: {
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
   },
   aboutText: {
     fontSize: 15,
-    margin: 10
+    margin: 3
   },
 })
 
