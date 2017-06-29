@@ -27,7 +27,7 @@ class ResultList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'E-Book検索結果',
     headerStyle: {
-      backgroundColor: '#039588',
+      backgroundColor: '#211E55',
     },
     headerTitleStyle: {
       color: '#fff',
