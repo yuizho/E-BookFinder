@@ -15,7 +15,7 @@ class CodeReader extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'ISBNバーコード読み取り',
     headerStyle: {
-      backgroundColor: '#211E55',
+      backgroundColor: '#2A4073',
     },
     headerTitleStyle: {
       color: '#fff',

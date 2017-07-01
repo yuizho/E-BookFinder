@@ -12,7 +12,7 @@ class AboutApp extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'このアプリについて',
     headerStyle: {
-      backgroundColor: '#211E55',
+      backgroundColor: '#2A4073',
     },
     headerTitleStyle: {
       color: '#fff',

@@ -27,7 +27,7 @@ class ResultList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'E-Book検索結果',
     headerStyle: {
-      backgroundColor: '#211E55',
+      backgroundColor: '#2A4073',
     },
     headerTitleStyle: {
       color: '#fff',
@@ -93,7 +93,10 @@ class ResultList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.searching ? <View style={styles.overlay}><Progress.Circle size={60} indeterminate={true} /></View>: null}
+        {this.state.searching ? <View style={styles.overlay}><Progress.Circle size={50}
+                                                                              indeterminate={true}
+                                                                              color={"#2A4073"}
+                                                                              borderWidth={4}/></View>: null}
         <ScrollView>
           {!this.state.searching && this.state.items.map((item) => {
             return (
