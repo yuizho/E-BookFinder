@@ -4,9 +4,13 @@ import {
   Text,
   StyleSheet,
   Image,
+  TouchableOpacity,
+  Linking,
 } from 'react-native'
 import Credit from '../components/Credit'
 import appInfo from 'EBookFinder/package.json'
+import Config from 'react-native-config'
+import { Answers } from 'react-native-fabric';
 
 class AboutApp extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -24,6 +28,12 @@ class AboutApp extends Component {
     super(props)
   }
 
+  openURL(url) {
+    Answers.logCustom('open url', { url: url });
+    Linking.openURL(url)
+      .catch(err => console.log('an error occurred on browser', err));
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -32,10 +42,14 @@ class AboutApp extends Component {
              style={styles.appImage}
              source={require('../img/android_icon.png')}
              />
-          <Text style={styles.aboutText}>E-BookFinder</Text>
-          <Text style={styles.aboutText}>
-            バージョン: {appInfo.version}
-          </Text>
+          <Text style={styles.aboutText}>E-BookFinder (ver {appInfo.version})</Text>
+          <TouchableOpacity
+             style={styles.headerRight}
+             onPress={() => {this.openURL(Config.PRIVACY_POLICY)}}>
+            <Text style={styles.aboutLink}>
+              プライバシーポリシー
+            </Text>
+          </TouchableOpacity>
         </View>
         <Credit/>
       </View>
@@ -60,6 +74,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     margin: 3
   },
+  aboutLink: {
+    fontSize: 15,
+    margin: 3,
+    color: '#2A4073',
+    textDecorationLine: 'underline',
+  }
 })
 
 export default AboutApp
