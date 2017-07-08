@@ -44,7 +44,6 @@ class AboutApp extends Component {
              />
           <Text style={styles.aboutText}>E-BookFinder (ver {appInfo.version})</Text>
           <TouchableOpacity
-             style={styles.headerRight}
              onPress={() => {this.openURL(Config.PRIVACY_POLICY)}}>
             <Text style={styles.aboutLink}>
               プライバシーポリシー
